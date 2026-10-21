@@ -1,0 +1,26 @@
+# Build outputs and local development tools
+**/bin/
+**/obj/
+dist/
+app/
+artifacts/
+.vs/
+*.user
+*.suo
+*.lnk
+TestResults/
+
+# Account exports, protected stores and secrets
+*.reg
+*.dpapi
+*.dpapi.*
+*.previous
+.env
+.env.*
+profiles/
+backups/
+device.txt
+Mevcut.txt
+
+# Local session history; public validation notes are in docs/
+/VERIFICATION.txt

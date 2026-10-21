@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AnyOTPManager.Core/AnyOTPManager.Core.csproj" />
+    <Project Path="src/AnyOTPManager.Windows/AnyOTPManager.Windows.csproj" />
+    <Project Path="src/AnyOTPManager.App/AnyOTPManager.App.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AnyOTPManager.Tests/AnyOTPManager.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,46 @@
+AnyOTPManager — doğrulama
+========================
+22 Ekim 2026, Europe/Istanbul
+
+GEREKSİNİMLER
+Windows x64 ve .NET 10 SDK. Üretici karşılaştırması ayrı x86 süreçte çalışır.
+
+DERLEME VE TEST
+  dotnet build AnyOTPManager.slnx -c Release
+  dotnet test AnyOTPManager.slnx -c Release --no-build
+
+Yerel son işlev doğrulaması: 84 test PASS, başarısız/atlanmış test yok.
+Kapsam: TXT/REG ve bilgisayardan ekleme, hane alanının boşluk/sıfır dolgusu,
+PIN/disk/bütünlük doğrulaması, DPAPI kasa, kaynak koruma, tekrar kayıt,
+iptal, PIN değiştirme, dışa aktarma, aktarım ve geri alma.
+
+ÜRETİCİ KARŞILAŞTIRMASI
+  dotnet run --project tools/AnyOTPManager.NativeCheck -c Release -- vendor/anyotp artifacts/native-verification.json
+
+Yerel doğrulama: 1069 kontrol PASS. 960 sentetik OTP karşılaştırması ve
+27 süre/hane/dolgu profili. AES/SHA-1 türetme, SetPIN çıktısı ve public COM
+üzerinden kod eşliği kontrol edilir. Üretici ChangePIN'in farklı yeni PIN
+verildiğinde seed'i korumadığı sentetik senaryo ayrıca doğrulanır; uygulama
+bu çağrı yerine doğrulanmış seed'i managed kodla yeniden şifreler.
+Üretici DLL'lerinin beklenen hashleri vendor/anyotp/README.txt içindedir.
+
+ARAYÜZ
+  dotnet run --project tools/AnyOTPManager.UiCheck -c Release -- artifacts/ui
+
+Yerel doğrulama: 26 kontrol PASS, 0 WPF binding hatası. Gerçek WPF pencereleri,
+sentetik profiller ve test registry deposu kullanılır. Kaynak dosyalar veya
+aktif AnyOTP kaydı yerine test verileriyle ekleme, PIN, kopyalama, arama,
+aktarım ve geri alma çalıştırılır. Yerel WMI disk bilgileri salt okunur.
+
+PAKETLEME
+  powershell -ExecutionPolicy Bypass -File tools/Publish.ps1
+  powershell -ExecutionPolicy Bypass -File tools/Test-PublishedStartup.ps1
+
+Paket kontrolü için uygulamayı önce kapatın. Başlangıç kontrolü yeni pencereyi
+açar ve normal kapatır. Kullanıcının korumalı kasasını okuyabilir; kayıt
+eklemez veya etkin AnyOTP kaydına aktarım yapmaz.
+
+SINIRLAR
+Bu sayılar yerel test sonuçlarıdır; uzak CI veya gerçek sunucu kabulü iddiası
+değildir. Test fixture'ları sentetiktir. Test çıktıları artifacts altında
+üretilir ve Git'e girmez. Hesap dosyaları ve yerel oturum raporları yayımlanmaz.
